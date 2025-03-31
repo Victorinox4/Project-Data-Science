@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Carte des Incendies en Californie</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #chart {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    #controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    #year-label {
+      font-size: 18px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      width: 300px;
+    }
+
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Incendies en Californie (2013–2023)</h1>
+
+  <div id="chart"></div>
+
+  <div id="controls">
+    <p id="year-label">Année : 2013</p>
+    <input type="range" id="timeline" min="2013" max="2023" step="1" value="2013">
+  </div>
+
+  <!-- Librairies D3 et TopoJSON -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+
+  <!-- Script principal -->
+  <script src="main.js"></script>
+
+  <!-- Animation automatique de la timeline -->
+  <script>
+    let year = 2013;
+    const maxYear = 2023;
+    setInterval(() => {
+      year++;
+      if (year > maxYear) year = 2013;
+      document.getElementById("timeline").value = year;
+      document.getElementById("year-label").textContent = `Année : ${year}`;
+      if (typeof update === "function") update(year);
+    }, 1200);
+  </script>
+
+</body>
+</html>
